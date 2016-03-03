@@ -30,6 +30,49 @@
             "description": "Array of allowed hostnames",
             "default":  "['*']"
         },
+        "MICROMASTERS_ADMIN_EMAIL": {
+            "description": "E-mail to send 500 reports to.",
+            "required": false
+        },
+        "MICROMASTERS_EMAIL_HOST": {
+            "description": "Outgoing e-mail settings",
+            "required": false
+        },
+        "MICROMASTERS_EMAIL_PASSWORD": {
+            "description": "Outgoing e-mail settings",
+            "required": false
+        },
+        "MICROMASTERS_EMAIL_PORT": {
+            "description": "Outgoing e-mail settings",
+            "required": false,
+            "value":  "587"
+        },
+        "MICROMASTERS_EMAIL_TLS": {
+            "description": "Outgoing e-mail settings",
+            "required": false,
+            "value":  "True"
+        },
+        "MICROMASTERS_EMAIL_USER": {
+            "description": "Outgoing e-mail settings",
+            "required": false
+        },
+        "MICROMASTERS_FROM_EMAIL": {
+            "description": "E-mail to use for the from field"
+
+        },
+        "NEW_RELIC_APP_NAME": {
+            "description": "Application identifier in New Relic.",
+            "default": "MicroMasters"
+        },
+        "SECRET_KEY": {
+            "description": "Django secret key.",
+            "generator": "secret"
+        },
+        "MICROMASTERS_SECURE_SSL_REDIRECT": {
+            "description": "Application-level SSL redirect setting.",
+            "required": false,
+            "value": "True"
+        },
         "STATUS_TOKEN": {
             "description": "Token to access the status API.",
             "required": true
