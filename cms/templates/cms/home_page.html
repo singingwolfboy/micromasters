@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-programpage{% endblock %}
+
+{% block content %}
+<h1>{{ page.title }}</h1>
+
+{{ page.description|richtext }}
+
+<ul>
+{% for program in programs %}
+  <li>
+    {% if program.programpage %}<a href="{{program.programpage.url}}">{% endif %}
+      {{program}}
+    {% if program.programpage %}</a>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

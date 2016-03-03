@@ -83,8 +83,27 @@ INSTALLED_APPS = (
     'rest_framework',
     'server_status',
     'social.apps.django_app.default',
+
+    # WAGTAIL
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
+
+    'modelcluster',
+    'compressor',
+    'taggit',
+
     # Our INSTALLED_APPS
     'ui',
+    'cms',
     'courses',
     'backends',
     'profiles',
@@ -99,6 +118,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -334,3 +355,5 @@ HEALTH_CHECK = ['POSTGRES']
 
 GA_TRACKING_ID = get_var("GA_TRACKING_ID", "")
 REACT_GA_DEBUG = get_var("REACT_GA_DEBUG", False)
+
+WAGTAIL_SITE_NAME = "MIT Micromasters"
