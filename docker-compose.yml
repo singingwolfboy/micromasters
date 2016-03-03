@@ -17,6 +17,7 @@ web:
     PORT: 8079
     COVERAGE_DIR: htmlcov
     DATABASE_URL: postgres://postgres@db:5432/postgres
+    MICROMASTERS_SECURE_SSL_REDIRECT: 'False'
     STATUS_TOKEN: 'test-token'
   env_file: .env
   ports:

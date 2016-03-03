@@ -68,6 +68,8 @@ DEBUG = get_var('DEBUG', False)
 
 ALLOWED_HOSTS = get_var('ALLOWED_HOSTS', [])
 
+SECURE_SSL_REDIRECT = get_var('MICROMASTERS_SECURE_SSL_REDIRECT', True)
+
 
 # Application definition
 
