@@ -2,7 +2,7 @@ Django==1.9.4
 PyYAML==3.11
 dj-database-url==0.3.0
 dj-static==0.0.6
-django-server-status==0.3
+django-server-status==0.3.2
 djangorestframework==3.3.2
 factory_boy==2.6.0
 fake-factory==0.5.3
