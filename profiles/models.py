@@ -6,6 +6,16 @@ from django.db import models, transaction
 from django.db.models import Max
 from jsonfield import JSONField
 
+DOCTORATE = 'p'
+MASTERS = 'm'
+BACHELORS = 'b'
+ASSOCIATE = 'a'
+HIGH_SCHOOL = 'hs'
+JUNIOR_HIGH_SCHOOL = 'jhs'
+ELEMENTARY = 'el'
+NO_FORMAL_EDUCATION = 'none'
+OTHER_EDUCATION = 'other'
+
 
 class Profile(models.Model):
     """
@@ -30,15 +40,6 @@ class Profile(models.Model):
         (OTHER, 'Other/Prefer Not to Say'),
     )
 
-    DOCTORATE = 'p'
-    MASTERS = 'm'
-    BACHELORS = 'b'
-    ASSOCIATE = 'a'
-    HIGH_SCHOOL = 'hs'
-    JUNIOR_HIGH_SCHOOL = 'jhs'
-    ELEMENTARY = 'el'
-    NO_FORMAL_EDUCATION = 'none'
-    OTHER_EDUCATION = 'other'
     LEVEL_OF_EDUCATION_CHOICES = (
         (DOCTORATE, 'Doctorate'),
         (MASTERS, "Master's or professional degree"),
@@ -144,3 +145,21 @@ class Profile(models.Model):
     def pretty_printed_student_id(self):
         """pretty prints the student id for easy display"""
         return "MMM{0:06}".format(self.student_id) if self.student_id else ""
+
+
+class Education(models.Model):
+    DEGREE_CHOICES = (
+        (DOCTORATE, 'Doctorate'),
+        (MASTERS, "Master's or professional degree"),
+        (BACHELORS, "Bachelor's degree"),
+        (ASSOCIATE, "Associate degree"),
+        (HIGH_SCHOOL, "High school"),
+        (OTHER_EDUCATION, "Other education"),
+    )
+    profile = models.ForeignKey(Profile, related_name='education')
+    degree_name = models.CharField(max_length=30, choices=DEGREE_CHOICES)
+    graduation_date = models.DateField()
+    subject = models.CharField(max_length=30)
+    school_name = models.CharField(max_length=50)
+    school_city = models.CharField(max_length=30)
+    school_country = models.CharField(max_length=30)

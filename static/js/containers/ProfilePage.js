@@ -16,6 +16,7 @@ import {
 class ProfilePage extends React.Component {
   updateProfile(isEdit, profile) {
     const { dispatch } = this.props;
+
     if (!isEdit) {
       dispatch(startProfileEdit());
     }
@@ -28,11 +29,9 @@ class ProfilePage extends React.Component {
       // Validation errors will only show up if we start the edit
       dispatch(startProfileEdit());
     }
-    return dispatch(validateProfile(profile)).then(() => {
-      dispatch(saveProfile(SETTINGS.username, profile)).then(() => {
+    return dispatch(saveProfile(SETTINGS.username, profile)).then(() => {
         dispatch(clearProfileEdit());
       });
-    });
   }
 
   makeTabs () {
