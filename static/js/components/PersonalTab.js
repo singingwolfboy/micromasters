@@ -7,7 +7,7 @@ import { saveAndContinue } from "../util/profile_edit";
 class PersonalTab extends ProfileTab {
   constructor(props) {
     super(props);
-    this.saveAndContinue = saveAndContinue.bind(this, '/profile/professional');
+    this.saveAndContinue = saveAndContinue.bind(this, '/profile/education');
   }
 
   static propTypes = {

@@ -18,6 +18,11 @@ import {
   RECEIVE_PATCH_USER_PROFILE_FAILURE,
   UPDATE_PROFILE_VALIDATION,
 
+  SHOW_EDUCATION_FORM_DIALOG,
+  HIDE_EDUCATION_FORM_DIALOG,
+  TOGGLE_EDUCATION_LEVEL,
+  DISABLE_EDUCATION_LEVEL,
+
   REQUEST_DASHBOARD,
   RECEIVE_DASHBOARD_SUCCESS,
   RECEIVE_DASHBOARD_FAILURE,
@@ -55,6 +60,45 @@ export const courseList = (state = INITIAL_COURSE_LIST_STATE, action) => {
     return state;
   }
 };
+
+export const INITIAL_DIALOG_STATE = {
+  openDialog: false,
+  degreeLevel: '',
+  educationIndex: 0
+};
+export const educationDialog = (state = INITIAL_DIALOG_STATE, action) => {
+  switch (action.type) {
+    case SHOW_EDUCATION_FORM_DIALOG:
+      return Object.assign({}, state, {
+        openDialog: true,
+        degreeLevel: action.payload.level,
+        educationIndex: action.payload.index
+      });
+    case HIDE_EDUCATION_FORM_DIALOG:
+      return INITIAL_DIALOG_STATE;
+    default:
+      return state;
+  }
+};
+export const INITIAL_EDUCATION_LEVEL_STATE = {
+  hs: true,
+  a: true,
+  b: true,
+  m: false,
+  d: false
+};
+export const educationLevels = (state = INITIAL_EDUCATION_LEVEL_STATE, action) => {
+  switch (action.type) {
+    case TOGGLE_EDUCATION_LEVEL:
+      let updated_state = {};
+      updated_state[action.payload.level]= !state[action.payload.level];
+      return Object.assign({}, state, updated_state);
+
+    default:
+      return state;
+  }
+};
+
 
 export const INITIAL_USER_PROFILE_STATE = {
   profile: {}
@@ -161,4 +205,6 @@ export default combineReducers({
   courseList,
   userProfile,
   dashboard,
+  educationDialog,
+  educationLevels
 });

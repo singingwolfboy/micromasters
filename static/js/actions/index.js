@@ -22,6 +22,10 @@ export const RECEIVE_PATCH_USER_PROFILE_SUCCESS = 'RECEIVE_PATCH_USER_PROFILE_SU
 export const RECEIVE_PATCH_USER_PROFILE_FAILURE = 'RECEIVE_PATCH_USER_PROFILE_FAILURE';
 export const UPDATE_PROFILE_VALIDATION = 'UPDATE_PROFILE_VALIDATION';
 
+export const SHOW_EDUCATION_FORM_DIALOG = 'SHOW_EDUCATION_FORM_DIALOG';
+export const HIDE_EDUCATION_FORM_DIALOG = 'HIDE_EDUCATION_FORM_DIALOG';
+export const TOGGLE_EDUCATION_LEVEL = 'TOGGLE_EDUCATION_LEVEL';
+
 // constants for fetch status (these are not action types)
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -66,9 +70,19 @@ export const updateProfile = profile => ({
   type: UPDATE_PROFILE,
   payload: { profile }
 });
+export const openEducationForm = (level, index) => ({
+  type: SHOW_EDUCATION_FORM_DIALOG,
+  payload: { level, index }
+});
+export const closeEducationForm = () => ({type: HIDE_EDUCATION_FORM_DIALOG});
 
 export const startProfileEdit = () => ({ type: START_PROFILE_EDIT });
 export const clearProfileEdit = () => ({ type: CLEAR_PROFILE_EDIT });
+
+export const toggleEducationLevel = level => ({
+  type: TOGGLE_EDUCATION_LEVEL,
+  payload: { level }
+});
 
 const requestPatchUserProfile = () => ({ type: REQUEST_PATCH_USER_PROFILE });
 

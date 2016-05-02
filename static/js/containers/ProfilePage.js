@@ -26,6 +26,7 @@ class ProfilePage extends React.Component {
 
   updateProfile(isEdit, profile) {
     const { dispatch } = this.props;
+
     if (!isEdit) {
       dispatch(startProfileEdit());
     }

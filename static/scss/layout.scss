@@ -48,3 +48,28 @@ body {
     width: 100%;
     height: 100%;
 }
+
+.profile-tab-grid {
+      max-width: 900px;
+   border: 1px grey solid;
+}
+
+.education-level-name{
+  display: inline;
+}
+
+.education-level-header{
+  border: 1px solid lightgrey;
+}
+.mdl-dialog.profile-form-dialog{
+  width:600px;
+}
+.existing-education-grid.mdl-grid{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.existing-education-grid > .mdl-cell{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  line-height: 2.5;
+}

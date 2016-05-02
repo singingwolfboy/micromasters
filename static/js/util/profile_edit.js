@@ -49,7 +49,7 @@ export function boundSelectField(keySet, label, options) {
   } = this.props;
   let onChange = value => {
     let clone = _.cloneDeep(profile);
-    _.set(clone, keySet, value? value.value : null)
+    _.set(clone, keySet, value? value.value : null);
     updateProfile(clone);
   };
   return <div>
@@ -89,7 +89,68 @@ export function boundDateField(keySet, label) {
     <span className="validation-error-text">{_.get(errors, keySet)}</span>
   </div>;
 }
+export function boundEducationMonthField(keySet, label) {
+  const {updateProfile, profile} = this.props;
+  let onChange = month => {
+    let clone = Object.assign({}, profile);
 
+    let current_value = _.get(clone, keySet);
+        // format as ISO-8601
+    if(month === null){
+      _.set(clone, keySet, null);
+    }else if (current_value){
+      _.set(clone, keySet, moment(current_value).set('month', month.value).format('YYYY-MM-DD'));
+    } else {
+      _.set(clone, keySet, moment().set('day', 1).set('month', month.value).format('YYYY-MM-DD'));
+    }
+    updateProfile(clone);
+  };
+  let month = _.get(profile, keySet)? moment(_.get(profile, keySet), "YYYY-MM-DD").month() : null;
+  const month_options = [
+    { value: 0, label: 'January'},
+    { value: 1, label: 'February'},
+    { value: 2, label: 'March'},
+    { value: 3, label: 'April'},
+    { value: 4, label: 'May'},
+    { value: 5, label: 'June'},
+    { value: 6, label: 'July'},
+    { value: 7, label: 'August'},
+    { value: 8, label: 'September'},
+    { value: 9, label: 'October'},
+    { value: 10, label: 'November'},
+    { value: 11, label: 'December'}
+  ];
+
+
+  return <Select
+      options={month_options}
+      value={month}
+      placeholder={label}
+      onChange={onChange}
+    />;
+}
+
+export function boundEducationYearField(keySet, label){
+  const {updateProfile, profile} = this.props;
+  let onChange = year => {
+    let clone = Object.assign({}, profile);
+    let current_value = _.get(clone, keySet);
+    // format as ISO-8601
+    if(month === null) {
+      _.set(clone, keySet, null);
+    }else if (current_value){
+      _.set(clone, keySet, moment(current_value).set('year', year.value).format('YYYY-MM-DD'));
+    } else {
+      _.set(clone, keySet, moment().set('year', year.value).format('YYYY-MM-DD'));
+    }
+    updateProfile(profile_with_education);
+  };
+  let year = _.get(profile, keySet)? moment(_.get(profile, keySet), "YYYY-MM-DD").year() : null;
+  return  <TextField
+      label={label}
+      value={year}
+      onChange={onChange}/>;
+}
 
 // bind to this.saveAndContinue.bind(this, '/next/url')
 // pass an option callback if you need nested validation
