@@ -17,6 +17,8 @@ class ProgramFactory(DjangoModelFactory):
     title = fuzzy.FuzzyText(prefix="Program ")
     live = fuzzy.FuzzyAttribute(FAKE.boolean)
     description = fuzzy.FuzzyText()
+    path = fuzzy.FuzzyText()
+    depth = fuzzy.FuzzyAttribute(FAKE.pyint)
 
     class Meta:  # pylint: disable=missing-docstring
         model = Program
@@ -26,7 +28,7 @@ class CourseFactory(DjangoModelFactory):
     """Factory for Courses"""
     title = fuzzy.FuzzyText(prefix="Course ")
     program = factory.SubFactory(ProgramFactory)
-    position_in_program = factory.Sequence(lambda n: n)
+    sort_order = factory.Sequence(lambda n: n)
 
     description = fuzzy.FuzzyText()
     prerequisites = fuzzy.FuzzyText(prefix="Course requires ")
@@ -36,9 +38,9 @@ class CourseFactory(DjangoModelFactory):
 
     @classmethod
     def _setup_next_sequence(cls):
-        last = Course.objects.order_by('position_in_program').last()
+        last = Course.objects.order_by('sort_order').last()
         if last is not None:
-            return last.position_in_program + 1
+            return last.sort_order + 1
         return 0
 
 
