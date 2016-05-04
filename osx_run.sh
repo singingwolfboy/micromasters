@@ -50,4 +50,4 @@ fi
 .venv/bin/pip install -r test_requirements.txt
 
 # Postgres is assumed to be running already
-.venv/bin/python3 $@
+$@
