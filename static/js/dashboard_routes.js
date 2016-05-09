@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Router, IndexRedirect } from 'react-router';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import App from './containers/App';
 import DashboardPage from './containers/DashboardPage';
@@ -20,19 +22,21 @@ import TermsOfServicePage from './containers/TermsOfServicePage';
  */
 export function makeDashboardRoutes(browserHistory, store, onRouteUpdate) {
   return <div>
-    <Provider store={store}>
-      <Router history={browserHistory} onUpdate={onRouteUpdate}>
-        <Route path="/" component={App}>
-          <Route path="dashboard" component={DashboardPage} />
-          <Route path="profile" component={ProfilePage}>
-            <IndexRedirect to="personal" />
-            <Route path="personal" component={PersonalTab} />
-            <Route path="professional" component={EmploymentTab} />
-            <Route path="privacy" component={PrivacyTab} />
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <Provider store={store}>
+        <Router history={browserHistory} onUpdate={onRouteUpdate}>
+          <Route path="/" component={App}>
+            <Route path="dashboard" component={DashboardPage} />
+            <Route path="profile" component={ProfilePage}>
+              <IndexRedirect to="personal" />
+              <Route path="personal" component={PersonalTab} />
+              <Route path="professional" component={EmploymentTab} />
+              <Route path="privacy" component={PrivacyTab} />
+            </Route>
+            <Route path="/terms_of_service" component={TermsOfServicePage} />
           </Route>
-          <Route path="/terms_of_service" component={TermsOfServicePage} />
-        </Route>
-      </Router>
-    </Provider>
+        </Router>
+      </Provider>
+    </MuiThemeProvider>
   </div>;
 }

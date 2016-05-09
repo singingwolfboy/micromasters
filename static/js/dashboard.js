@@ -24,6 +24,10 @@ if (!Object.entries) {
 // requirement for dialog-polyfill
 import 'style!css!dialog-polyfill/dialog-polyfill.css';
 
+// material-ui requirement
+let injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 const store = configureStore();
 
 let debug = SETTINGS.reactGaDebug === "true";

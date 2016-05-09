@@ -37,6 +37,7 @@
     "iso-3166-2": "0.4.0",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.11.2",
+    "material-ui": "0.15.0",
     "moment": "2.13.0",
     "node-neat": "1.7.2",
     "node-sass": "3.7.0",
