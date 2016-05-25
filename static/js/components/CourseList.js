@@ -112,8 +112,10 @@ class CourseList extends React.Component {
           <div className="apply-for-ms">
             <br/>
             <p>You need to pass {totalCourses - coursesPassed} more courses
-              before you can apply for <strong>{program.title}</strong> Master's Degree.</p>
-            <Button bsStyle="primary" disabled>Apply for <strong>{program.title}</strong> Master Degree</Button>
+              before you can apply for the <strong>{program.title}</strong> Master’s Degree.</p>
+            <Button className="btn-apply-for-ms" bsStyle="default" disabled>
+              Apply for the {program.title} Master’s Degree
+            </Button>
           </div>
         </div>
       );

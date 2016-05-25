@@ -47,6 +47,12 @@ c.validation-wrapper {
       }
     }
 
+    .bottom-align-text {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
     .card-header {
       padding: 25px;
       font-size: x-large;
@@ -307,6 +313,18 @@ c.validation-wrapper {
     .terms-of-service-content {
       padding: 20px;
     }
+  }
+}
+
+button.btn-apply-for-ms {
+  font-family: "Open Sans";
+  padding: 15px 20px;
+  font-weight: 400;
+  color: #FFFFFF;
+  &:disabled {
+    background: #B2C9D2;
+    pointer-events: none;
+    cursor: not-allowed;
   }
 }
 

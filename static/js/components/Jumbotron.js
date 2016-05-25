@@ -3,6 +3,7 @@ import React from 'react';
 import Grid, { Cell } from 'react-mdl/lib/Grid';
 
 import { makeProfileImageUrl } from '../util/util';
+import Footer from './Footer';
 
 class Jumbotron extends React.Component {
   static propTypes = {
@@ -34,6 +35,7 @@ class Jumbotron extends React.Component {
         </Cell>
       </Grid>
       { this.props.children }
+      <Footer />
     </div>;
   }
 }
