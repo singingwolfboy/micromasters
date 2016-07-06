@@ -17,10 +17,12 @@ web:
     DATABASE_URL: postgres://postgres@db:5432/postgres
     MICROMASTERS_SECURE_SSL_REDIRECT: 'False'
     MICROMASTERS_DB_DISABLE_SSL: 'True'
+    ELASTICSEARCH_URL: elastic:9200
   ports:
     - "8079:8079"
   links:
     - db
+    - elastic
 
 watch:
   image: node:6.2
@@ -33,3 +35,10 @@ watch:
     - .:/src
   environment:
     NODE_ENV: 'production'
+
+elastic:
+  image: elasticsearch
+  command: elasticsearch -Des.network.host=0.0.0.0
+  ports:
+    - "9200"
+

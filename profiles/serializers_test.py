@@ -2,7 +2,6 @@
 Tests for profile serializers
 """
 
-from django.test import TestCase
 from django.db.models.signals import post_save
 from factory.django import mute_signals
 from rest_framework.fields import DateTimeField
@@ -30,10 +29,11 @@ from profiles.util import (
     GravatarImgSize,
     format_gravatar_url,
 )
+from search.base import ESTestCase
 
 
 # pylint: disable=no-self-use
-class ProfileTests(TestCase):
+class ProfileTests(ESTestCase):
     """
     Tests for profile serializers
     """

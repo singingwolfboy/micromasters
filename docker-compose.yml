@@ -32,11 +32,13 @@ web:
     MICROMASTERS_USE_WEBPACK_DEV_SERVER: 'True'
     MICROMASTERS_SECURE_SSL_REDIRECT: 'False'
     MICROMASTERS_DB_DISABLE_SSL: 'True'
+    ELASTICSEARCH_URL: elastic:9200
   env_file: .env
   ports:
     - "8079:8079"
   links:
     - db
+    - elastic
 
 watch:
   build: .
@@ -68,6 +70,7 @@ celery:
     DATABASE_URL: postgres://postgres@db:5432/postgres
     BROKER_URL: redis://redis:6379/4
     CELERY_RESULT_BACKEND: redis://redis:6379/4
+    ELASTICSEARCH_URL: elastic:9200
   links:
     - db
     - elastic

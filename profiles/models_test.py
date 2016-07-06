@@ -2,14 +2,14 @@
 Model tests
 """
 # pylint: disable=no-self-use
-from django.test import TestCase
 from django.db.models.signals import post_save
 from factory.django import mute_signals
 from profiles.factories import ProfileFactory, UserFactory
 from profiles.models import Profile
+from search.base import ESTestCase
 
 
-class ProfileTests(TestCase):
+class ProfileTests(ESTestCase):
     """tests for the profile model"""
 
     def test_student_id_on_save(self):

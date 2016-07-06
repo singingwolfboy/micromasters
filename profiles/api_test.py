@@ -5,16 +5,16 @@ Tests for profile functions
 from mock import Mock
 
 from django.db.models.signals import post_save
-from django.test import TestCase
 from factory.django import mute_signals
 from testfixtures import LogCapture
 
 from backends.edxorg import EdxOrgOAuth2
 from profiles.api import get_social_username
 from profiles.factories import ProfileFactory
+from search.base import ESTestCase
 
 
-class SocialTests(TestCase):
+class SocialTests(ESTestCase):
     """
     Tests for profile functions
     """
@@ -23,6 +23,7 @@ class SocialTests(TestCase):
         """
         Create a user with a default social auth
         """
+        super(SocialTests, self).setUp()
 
         with mute_signals(post_save):
             profile = ProfileFactory.create(

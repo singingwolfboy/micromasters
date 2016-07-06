@@ -3,11 +3,11 @@ Decorator tests
 """
 
 from django.db.models.signals import post_save
-from django.test import TestCase
 from factory.django import mute_signals
 
 from backends.edxorg import EdxOrgOAuth2
 from profiles.factories import ProfileFactory
+from search.base import ESTestCase
 from ui.url_utils import (
     DASHBOARD_URL,
     PROFILE_URL,
@@ -15,7 +15,7 @@ from ui.url_utils import (
 )
 
 
-class DecoratorTests(TestCase):
+class DecoratorTests(ESTestCase):
     """
     Decorator tests for UI views
     """

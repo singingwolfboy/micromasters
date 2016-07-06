@@ -1,12 +1,12 @@
 """Tests for the API"""
 # pylint: disable=no-self-use
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 
 from .factories import ProgramFactory, CourseFactory
+from search.base import ESTestCase
 
 
-class ProgramTests(TestCase):
+class ProgramTests(ESTestCase):
     """Tests for the Program API"""
     def test_lists_live_programs(self):
         """Live programs should show up"""
@@ -26,7 +26,7 @@ class ProgramTests(TestCase):
         assert len(resp.json) == 0
 
 
-class CourseTests(TestCase):
+class CourseTests(ESTestCase):
     """Tests for the Course API"""
     def test_list_course_if_program_live(self):
         """

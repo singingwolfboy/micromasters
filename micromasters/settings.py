@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'backends',
     'profiles',
     'dashboard',
+    'search',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -409,3 +410,7 @@ CELERY_RESULT_BACKEND = get_var(
 CELERY_ALWAYS_EAGER = get_var("CELERY_ALWAYS_EAGER", True)
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = get_var(
     "CELERY_EAGER_PROPAGATES_EXCEPTIONS", True)
+
+# Elasticsearch
+ELASTICSEARCH_URL = get_var("ELASTICSEARCH_URL", None)
+ELASTICSEARCH_INDEX = get_var('ELASTICSEARCH_INDEX', 'micromasters')

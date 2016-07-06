@@ -4,7 +4,6 @@ Tests for the pipeline APIs
 
 from urllib.parse import urljoin
 
-from django.test import TestCase
 import mock
 
 from backends import pipeline_api, edxorg
@@ -13,10 +12,11 @@ from profiles.api import get_social_username
 from profiles.models import Profile
 from profiles.factories import UserFactory
 from profiles.util import split_name
+from search.base import ESTestCase
 
 
 # pylint: disable=no-self-use
-class EdxPipelineApiTest(TestCase):
+class EdxPipelineApiTest(ESTestCase):
     """
     Test class for APIs run during the Python Social Auth
     authentication pipeline.
@@ -52,6 +52,7 @@ class EdxPipelineApiTest(TestCase):
         """
         Set up class
         """
+        super(EdxPipelineApiTest, self).setUp()
         self.user = UserFactory()
         self.user.social_auth.create(
             provider='not_edx',
@@ -213,7 +214,7 @@ class EdxPipelineApiTest(TestCase):
             assert self.user_profile.edx_language_proficiencies == proficiencies
 
 
-class LinkedInPipelineTests(TestCase):
+class LinkedInPipelineTests(ESTestCase):
     """Tests for the LinkedIn pipline entry"""
 
     def test_saves_linkedin_response(self):

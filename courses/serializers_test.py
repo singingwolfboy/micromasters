@@ -2,13 +2,12 @@
 Tests for serializers
 """
 
-from django.test import TestCase
-
 from courses.factories import CourseRunFactory
 from courses.serializers import CourseRunSerializer
+from search.base import ESTestCase
 
 
-class CourseRunSerializerTests(TestCase):
+class CourseRunSerializerTests(ESTestCase):
     """
     Tests for CourseRunSerializer
     """

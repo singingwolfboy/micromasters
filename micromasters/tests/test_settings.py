@@ -10,15 +10,15 @@ import tempfile
 from django.conf import settings
 from django.core import mail
 from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase
 import mock
 import semantic_version
 import yaml
 
 from micromasters.settings import load_fallback, get_var
+from search.base import ESTestCase
 
 
-class TestSettings(TestCase):
+class TestSettings(ESTestCase):
     """Validate that settings work as expected."""
 
     def reload_settings(self):

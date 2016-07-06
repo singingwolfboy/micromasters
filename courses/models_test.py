@@ -5,7 +5,6 @@ Model tests
 from datetime import datetime, timedelta
 
 import pytz
-from django.test import TestCase
 
 from courses.factories import (
     ProgramFactory,
@@ -13,9 +12,10 @@ from courses.factories import (
     CourseRunFactory,
 )
 from courses.models import CourseRun
+from search.base import ESTestCase
 
 
-class ProgramTests(TestCase):
+class ProgramTests(ESTestCase):
     """Tests for Program model"""
 
     def test_to_string(self):
@@ -24,16 +24,16 @@ class ProgramTests(TestCase):
         assert "{}".format(prog) == "Title"
 
 
-class CourseModelsMixin(TestCase):
+class CourseModelTests(ESTestCase):
     """Mixin for Course models"""
 
     @classmethod
     def setUpTestData(cls):
-        super(CourseModelsMixin, cls).setUpTestData()
+        super(CourseModelTests, cls).setUpTestData()
         cls.course = CourseFactory.create(title="Title")
 
     def setUp(self):
-        super(CourseModelsMixin, self).setUp()
+        super(CourseModelTests, self).setUp()
         self.now = datetime.now(pytz.utc)
 
     def create_run(self, course=None, start=None, end=None,
@@ -51,7 +51,7 @@ class CourseModelsMixin(TestCase):
         )
 
 
-class CourseTests(CourseModelsMixin):
+class CourseTests(CourseModelTests):
     """Tests for Course model"""
 
     def test_to_string(self):
@@ -244,7 +244,7 @@ class CourseTests(CourseModelsMixin):
         assert next_run.pk == course_run.pk
 
 
-class CourseRunTests(CourseModelsMixin):
+class CourseRunTests(CourseModelTests):
     """Tests for Course Run model"""
 
     def test_to_string(self):

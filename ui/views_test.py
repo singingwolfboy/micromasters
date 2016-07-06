@@ -4,7 +4,6 @@ Test end to end django views.
 import json
 
 from django.db.models.signals import post_save
-from django.test import TestCase
 from django.core.urlresolvers import reverse
 from factory.django import mute_signals
 from factory.fuzzy import FuzzyText
@@ -19,10 +18,11 @@ from courses.factories import ProgramFactory
 from backends.edxorg import EdxOrgOAuth2
 from profiles.api import get_social_username
 from profiles.factories import ProfileFactory
+from search.base import ESTestCase
 from ui.urls import DASHBOARD_URL
 
 
-class ViewsTests(TestCase):
+class ViewsTests(ESTestCase):
     """
     Test that the views work as expected.
     """
@@ -276,6 +276,7 @@ class TestProgramPage(ViewsTests):
     Test that the ProgramPage view work as expected.
     """
     def setUp(self):
+        super(TestProgramPage, self).setUp()
         homepage = HomePage.objects.first()
         program = Program(title="Test Program Title", live=True)
         program.save()

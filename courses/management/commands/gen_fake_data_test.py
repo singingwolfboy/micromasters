@@ -2,7 +2,6 @@
 gen_fake_data test
 """
 
-from django.test import TestCase
 import mock
 
 from courses.management.commands.gen_fake_data import Command
@@ -11,9 +10,10 @@ from courses.models import (
     CourseRun,
     Program,
 )
+from search.base import ESTestCase
 
 
-class GenFakeDataTest(TestCase):
+class GenFakeDataTest(ESTestCase):
     """
     gen_fake_data tests
     """

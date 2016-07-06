@@ -8,17 +8,16 @@ from mock import (
 )
 
 import pytz
-from django.test import TestCase
 from requests.exceptions import HTTPError
 
 from backends import utils
 from backends.edxorg import EdxOrgOAuth2
 from profiles.factories import UserFactory
-
+from search.base import ESTestCase
 # pylint: disable=protected-access
 
 
-class RefreshTest(TestCase):
+class RefreshTest(ESTestCase):
     """Class to test refresh token"""
 
     @classmethod

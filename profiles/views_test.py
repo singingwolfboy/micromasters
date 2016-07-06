@@ -7,7 +7,6 @@ from mock import patch
 from dateutil.parser import parse
 from django.core.urlresolvers import resolve, reverse
 from django.db.models.signals import post_save
-from django.test import TestCase
 from factory.django import mute_signals
 from rest_framework.status import (
     HTTP_405_METHOD_NOT_ALLOWED,
@@ -23,9 +22,10 @@ from profiles.serializers import (
     ProfileSerializer,
 )
 from profiles.views import ProfileViewSet
+from search.base import ESTestCase
 
 
-class ProfileTests(TestCase):
+class ProfileTests(ESTestCase):
     """
     Tests for GET on profile view
     """

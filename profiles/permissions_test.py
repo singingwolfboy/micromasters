@@ -4,7 +4,6 @@ Tests for profile permissions
 from mock import Mock
 from django.http import Http404
 from django.db.models.signals import post_save
-from django.test import TestCase
 from factory.django import mute_signals
 
 from backends.edxorg import EdxOrgOAuth2
@@ -17,10 +16,11 @@ from profiles.permissions import (
     CanEditIfOwner,
     CanSeeIfNotPrivate,
 )
+from search.base import ESTestCase
 
 
 # pylint: disable=no-self-use
-class CanEditIfOwnerTests(TestCase):
+class CanEditIfOwnerTests(ESTestCase):
     """
     Tests for CanEditIfOwner permissions
     """
@@ -62,7 +62,7 @@ class CanEditIfOwnerTests(TestCase):
 
 
 # pylint: disable=no-self-use
-class CanSeeIfNotPrivateTests(TestCase):
+class CanSeeIfNotPrivateTests(ESTestCase):
     """
     Tests for CanSeeIfNotPrivate permissions
     """

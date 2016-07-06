@@ -8,7 +8,6 @@ from mock import patch, MagicMock
 
 import pytz
 from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase
 
 from edx_api.certificates.models import Certificate, Certificates
 from edx_api.enrollments.models import Enrollments
@@ -20,9 +19,10 @@ from courses.factories import (
 )
 from dashboard import api
 from profiles.factories import UserFactory
+from search.base import ESTestCase
 
 
-class StatusTest(TestCase):
+class StatusTest(ESTestCase):
     """
     Tests for the different status classes
     """
@@ -93,12 +93,12 @@ class StatusTest(TestCase):
         assert len(api.CourseFormatConditionalFields.get_assoc_field(api.CourseStatus.OFFERED)) == 2
 
 
-class CourseMixin(TestCase):
+class CourseTests(ESTestCase):
     """Base class for APIs tests"""
 
     @classmethod
     def setUpTestData(cls):
-        super(CourseMixin, cls).setUpTestData()
+        super(CourseTests, cls).setUpTestData()
         cls.course = CourseFactory.create(title="Title")
 
         with open(os.path.join(os.path.dirname(__file__),
@@ -109,7 +109,7 @@ class CourseMixin(TestCase):
             [Certificate(cert_json) for cert_json in cls.certificates_json])
 
     def setUp(self):
-        super(CourseMixin, self).setUp()
+        super(CourseTests, self).setUp()
         self.now = datetime.now(pytz.utc)
 
     def create_run(self, course=None, start=None, end=None,
@@ -132,7 +132,7 @@ class CourseMixin(TestCase):
         return run
 
 
-class FormatRunTest(CourseMixin):
+class FormatRunTest(CourseTests):
     """Tests for the format_courserun_for_dashboard function"""
 
     def test_format_run_no_run(self):
@@ -244,7 +244,7 @@ class FormatRunTest(CourseMixin):
         )
 
 
-class CourseRunTest(CourseMixin):
+class CourseRunTest(CourseTests):
     """Tests for get_status_for_courserun"""
 
     @classmethod
@@ -392,7 +392,7 @@ class CourseRunTest(CourseMixin):
                 self.enrollments.get_enrollment_for_course("course-v1:MITx+8.MechCX+2014_T1"))
 
 
-class InfoCourseTest(CourseMixin):
+class InfoCourseTest(CourseTests):
     """Tests for get_info_for_course"""
 
     @classmethod
@@ -749,7 +749,7 @@ class InfoCourseTest(CourseMixin):
         mock_format.assert_called_once_with(run1, api.CourseStatus.OFFERED, position=1)
 
 
-class InfoProgramTest(TestCase):
+class InfoProgramTest(ESTestCase):
     """Tests for get_info_for_program"""
     @classmethod
     def setUpTestData(cls):

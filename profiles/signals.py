@@ -1,6 +1,6 @@
-'''
+"""
 Signals for user profiles
-'''
+"""
 
 import logging
 
