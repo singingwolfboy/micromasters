@@ -127,7 +127,7 @@ class App extends React.Component {
     const { router } = this.context;
 
     let empty = false;
-    if (TERMS_OF_SERVICE_REGEX.test(pathname)) {
+    if (TERMS_OF_SERVICE_REGEX.test(pathname) || PROFILE_REGEX.test(pathname)) {
       empty = true;
     }
     let pushUrl = url => router.push(url);

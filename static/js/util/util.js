@@ -49,30 +49,35 @@ export function makeProfileProgressDisplay(active: string) {
   const textY = (height - (radius * 2)) / 2 + radius * 2;
   const circleY = radius + paddingY;
 
-  const greenFill = "#00964e", greenLine = "#7dcba7";
+  const greenFill = "#30bb5c";
   const greyStroke = "#ececec", lightGreyText = "#b7b7b7", darkGreyText = "#888888";
-  const greyFill = "#eeeeee", greyCircle = "#dddddd";
+  const lightGreyFill = "#eeeeee", greyCircle = "#dddddd";
+  const darkGreyFill = "#626262";
   const colors = {
     completed: {
+      fill: darkGreyFill,
+      stroke: "white",
+      circleText: "white",
+      circleCheck: true,
+      text: "black",
+      line: greyStroke,
+      fontWeight: 400
+    },
+    current: {
       fill: greenFill,
       stroke: "white",
       circleText: "white",
-      text: greenFill,
-      line: greenLine
-    },
-    current: {
-      fill: "white",
-      stroke: greyStroke,
-      circleText: "black",
       text: "black",
-      line: greyStroke
+      line: greyStroke,
+      fontWeight: 700
     },
     future: {
-      fill: greyFill,
+      fill: lightGreyFill,
       stroke: greyCircle,
       circleText: darkGreyText,
       text: lightGreyText,
-      line: greyStroke
+      line: greyStroke,
+      fontWeight: 700
     }
   };
 
@@ -91,6 +96,25 @@ export function makeProfileProgressDisplay(active: string) {
 
     const circleX = paddingX + radius + circleDistance * i;
     const nextCircleX = paddingX + radius + circleDistance * (i + 1);
+    let circleTextElem;
+    if (colorScheme.circleCheck) {
+      // TODO
+    } else {
+      circleTextElem = <text
+        key={`circletext_${i}`}
+        x={circleX}
+        y={circleY}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        style={{
+          fill: colorScheme.circleText,
+          fontWeight: 700,
+          fontSize: "12pt"
+        }}
+      >
+        {i + 1}
+      </text>;
+    }
     elements.push(
       <circle
         key={`circle_${i}`}
@@ -107,26 +131,13 @@ export function makeProfileProgressDisplay(active: string) {
         textAnchor="middle"
         style={{
           fill: colorScheme.text,
-          fontWeight: 700,
+          fontWeight: colorScheme.fontWeight,
           fontSize: "12pt"
         }}
       >
         {label}
       </text>,
-      <text
-        key={`circletext_${i}`}
-        x={circleX}
-        y={circleY}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        style={{
-          fill: colorScheme.circleText,
-          fontWeight: 700,
-          fontSize: "12pt"
-        }}
-      >
-        {i + 1}
-      </text>
+      circleTextElem
     );
     if (i !== numCircles - 1) {
       elements.push(

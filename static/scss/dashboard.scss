@@ -57,6 +57,35 @@ c.validation-wrapper {
       }
     }
 
+    .card-profile-header {
+      // 900 should roughly match profile progress display width plus a little extra
+      width: 900px;
+      display: flex;
+      .card-image-box {
+        min-width: 190px;
+        height: 220px;
+        padding-top: 40px;
+        text-align: center;
+        .card-image{
+          border-radius: 50%;
+          height: 140px;
+          width: 140px;
+        }
+      }
+      .card-name {
+        font-size: 18pt;
+        line-height: 35px;
+        font-weight: 400;
+        align-self: center;
+
+        .card-student-id {
+          font-size: 18px;
+          color: #DB686C;
+          font-weight: 600;
+        }
+      }
+    }
+
     .card-header {
       padding: 25px;
       font-size: x-large;

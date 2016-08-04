@@ -1,6 +1,7 @@
 // @flow
 /* global SETTINGS */
 import React from 'react';
+import Grid, { Cell } from 'react-mdl/lib/Grid';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 
@@ -10,13 +11,13 @@ import {
 } from '../util/util';
 import { FETCH_PROCESSING } from '../actions';
 import { setProfileStep } from '../actions/ui';
-import Jumbotron from '../components/Jumbotron';
 import ErrorMessage from '../components/ErrorMessage';
 import ProfileFormContainer from './ProfileFormContainer';
 import PersonalTab from '../components/PersonalTab';
 import EmploymentTab from '../components/EmploymentTab';
 import PrivacyTab from '../components/PrivacyTab';
 import EducationTab from '../components/EducationTab';
+import ProfileImage from '../components/ProfileImage';
 import {
   PERSONAL_STEP,
   EDUCATION_STEP,
@@ -74,8 +75,6 @@ class ProfilePage extends ProfileFormContainer {
       nextStep: next
     });
     let profile: Profile = props.profile;
-    text = `Welcome ${getPreferredName(profile)}, let's
-      complete your enrollment to MIT MicroMasters.`;
 
     let loaded, content, errorMessage;
     if (profileInfo !== undefined) {
@@ -83,7 +82,15 @@ class ProfilePage extends ProfileFormContainer {
       if (profileInfo.errorInfo !== undefined) {
         errorMessage = <ErrorMessage errorInfo={profileInfo.errorInfo} />;
       } else {
-        content = <Jumbotron profile={profile} text={text}>
+        content = <div className="card">
+          <Grid className="card-profile-header">
+            <Cell col={4} className="card-image-box">
+              <ProfileImage profile={profile} />
+            </Cell>
+            <Cell col={8} className="card-name">
+              Hi <strong>{profile.username}</strong>! Complete the signup to enroll in MIT MicroMasters.
+            </Cell>
+          </Grid>
           <div className="card-copy">
             <div style={{textAlign: "center"}}>
               {makeProfileProgressDisplay(this.currentStep())}
@@ -92,7 +99,7 @@ class ProfilePage extends ProfileFormContainer {
               {this.currentComponent(props)}
             </section>
           </div>
-        </Jumbotron>;
+        </div>;
       }
     } else {
       loaded = false;

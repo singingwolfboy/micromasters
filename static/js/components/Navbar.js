@@ -11,9 +11,15 @@ class Navbar extends React.Component {
     changeUrl:  (i: number) => void,
   };
 
-  makeTabs: Function = (): React$Element[] => (
-    this.tabs.map((tab, i) => <Tab key={i}>{tab.label}</Tab>)
-  );
+  makeTabs: Function = (): React$Element[] => {
+    const { empty } = this.props;
+
+    if (empty) {
+      return [];
+    }
+
+    return this.tabs.map((tab, i) => <Tab key={i}>{tab.label}</Tab>);
+  };
 
   tabs: Object[] = [
     { label: 'Dashboard', path: '/dashboard', regex: /dashboard/ },
