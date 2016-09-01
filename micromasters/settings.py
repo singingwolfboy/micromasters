@@ -15,6 +15,7 @@ import os
 import platform
 
 from celery.schedules import crontab
+import djcelery
 import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
 import yaml
@@ -103,6 +104,7 @@ INSTALLED_APPS = (
 
     # other third party APPS
     'rolepermissions',
+    'djcelery',
 
     # Our INSTALLED_APPS
     'backends',
@@ -427,6 +429,8 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour='*/6')
     },
 }
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+djcelery.setup_loader()
 
 CELERY_TIMEZONE = 'UTC'
 

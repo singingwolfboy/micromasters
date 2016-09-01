@@ -52,7 +52,6 @@ coverage/
 
 # Django stuff:
 *.log
-celerybeat-schedule.db
 
 # Sphinx documentation
 docs/_build/
