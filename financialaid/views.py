@@ -1,11 +1,11 @@
 """
 Views from financialaid
 """
+from django.contrib.auth.models import User
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from social.tests.models import User
 
 from financialaid.serializers import FinancialAidSerializer
 
