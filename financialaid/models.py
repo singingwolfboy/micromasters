@@ -29,8 +29,9 @@ class TierProgram(models.Model):
     """
     program = models.ForeignKey(Program, null=False)
     tier = models.ForeignKey(Tier, null=False)
-    value = models.IntegerField(null=False)
+    discount_amount = models.IntegerField(null=False)
     current = models.BooleanField(null=False, default=False)
+    income_threshold = models.IntegerField(null=False)
 
     class Meta:
         unique_together = ('program', 'tier')
