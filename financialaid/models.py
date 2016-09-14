@@ -27,7 +27,7 @@ class TierProgram(models.Model):
     """
     The tiers for discounted pricing assigned to a program
     """
-    program = models.ForeignKey(Program, null=False)
+    program = models.ForeignKey(Program, null=False, related_name="tiers")
     tier = models.ForeignKey(Tier, null=False)
     discount_amount = models.IntegerField(null=False)
     current = models.BooleanField(null=False, default=False)
@@ -64,8 +64,7 @@ class FinancialAid(models.Model):
     An application for financial aid/personal pricing
     """
     user = models.ForeignKey(User, null=False)
-    program = models.ForeignKey(Program, null=False)
-    tier = models.ForeignKey(TierProgram, null=True)
+    tier = models.ForeignKey(TierProgram, null=False)
     status = models.CharField(
         null=False,
         choices=[(status, status) for status in FinalcialAidStatus.ALL_STATUSES],
@@ -76,7 +75,6 @@ class FinancialAid(models.Model):
     original_income = models.FloatField(null=True)
     original_currency = models.CharField(null=True, max_length=10)
     country_of_income = models.CharField(null=True, max_length=100)
-    exchange_rate = models.FloatField(null=True)
     date_exchange_rate = models.DateTimeField(null=True)
 
 
