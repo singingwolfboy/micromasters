@@ -5,6 +5,7 @@ import Grid, { Cell } from 'react-mdl/lib/Grid';
 import CourseAction from './CourseAction';
 import CourseStatus from './CourseStatus';
 import CourseDescription from './CourseDescription';
+import Runs from './Runs';
 import type { Course } from '../../flow/programTypes';
 
 export default class CourseRow extends React.Component {
@@ -17,16 +18,19 @@ export default class CourseRow extends React.Component {
   render() {
     const { course, now, checkout } = this.props;
 
-    return <Grid className="course-row">
-      <Cell col={6}>
-        <CourseDescription course={course} />
-      </Cell>
-      <Cell col={3}>
-        <CourseStatus course={course}/>
-      </Cell>
-      <Cell col={3}>
-        <CourseAction course={course} now={now} checkout={checkout} />
-      </Cell>
-    </Grid>;
+    return <div className="course-row">
+      <Grid>
+        <Cell col={6}>
+          <CourseDescription course={course} />
+        </Cell>
+        <Cell col={3}>
+          <CourseStatus course={course}/>
+        </Cell>
+        <Cell col={3}>
+          <CourseAction course={course} now={now} checkout={checkout} />
+        </Cell>
+      </Grid>
+      <Runs course={course} />
+    </div>;
   }
 }

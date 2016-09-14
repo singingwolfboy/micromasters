@@ -119,8 +119,12 @@ export function patchUserProfile(username: string, profile: Profile): Promise<Pr
   });
 }
 
+import {
+  DASHBOARD_RESPONSE,
+} from '../constants';
 export function getDashboard(): Promise<Dashboard> {
-  return mockableFetchJSONWithCSRF('/api/v0/dashboard/', {}, true);
+  //return mockableFetchJSONWithCSRF('/api/v0/dashboard/', {}, true);
+  return Promise.resolve(DASHBOARD_RESPONSE);
 }
 
 export function checkout(courseId: string): Promise<CheckoutResponse> {
@@ -144,7 +148,11 @@ export function sendSearchResultMail(subject: string, body: string, searchReques
 }
 
 export function getProgramEnrollments(): Promise<ProgramEnrollments> {
-  return mockableFetchJSONWithCSRF('/api/v0/enrolledprograms/', {}, true);
+  //return mockableFetchJSONWithCSRF('/api/v0/enrolledprograms/', {}, true);
+  return Promise.resolve(DASHBOARD_RESPONSE.map(program => ({
+    title: program.title,
+    id: program.id,
+  })));
 }
 
 export function addProgramEnrollment(programId: number): Promise<ProgramEnrollment> {

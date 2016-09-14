@@ -301,7 +301,81 @@ export const DASHBOARD_RESPONSE = [
         "title": "Peter Course",
         "description": "",
         "id": 4
-      }
+      },
+      {
+        "runs": [
+          {
+            "position": 0,
+            "title": "Should not be seeing this",
+            "course_id": "course-v1:failed",
+            "status": STATUS_NOT_PASSED,
+            "id": 2456,
+            "course_start_date": "2016-08-22T11:48:27Z",
+            "fuzzy_start_date": "Fall 2017",
+            "course_end_date": "2016-09-09T10:20:10Z",
+            "grade": 0.77
+          }
+        ],
+        "id": 4567,
+        "position_in_program":  4,
+        "title": "Failed course, no other runs",
+        "description": "",
+      },
+      {
+        "runs": [
+          {
+            "position": 0,
+            "title": "Run not passed",
+            "course_id": "course-v1:failed2",
+            "status": STATUS_NOT_PASSED,
+            "id": 2457,
+            "course_start_date": "2016-08-22T11:48:27Z",
+            "fuzzy_start_date": "Fall 2017",
+            "course_end_date": "2016-09-09T10:20:10Z",
+            "grade": 0.33,
+          },
+          {
+            "position": 1,
+            "title": "Another run that is available",
+            "course_id": "course-v1:after_failed2",
+            "status": STATUS_OFFERED,
+            "id": 2458,
+            "course_start_date": "2017-08-22T11:48:27Z",
+            "fuzzy_start_date": "Fall 2017",
+            "course_end_date": "2017-09-09T10:20:10Z",
+          },
+        ],
+        "position_in_program": 5,
+        "title": "Course not passed, one other run",
+        "id": 4568,
+      },
+      {
+        "runs": [
+          {
+            "position": 0,
+            "title": "Failed course",
+            "course_id": "course-v1:failed3",
+            "status": STATUS_NOT_PASSED,
+            "id": 2459,
+            "course_start_date": "2016-08-22T11:48:27Z",
+            "fuzzy_start_date": "Fall 2017",
+            "course_end_date": "2016-09-09T10:20:10Z",
+            "grade": 0.33
+          },
+          {
+            "position": 1,
+            "title": "Run far into the future",
+            "course_id": "course-v1:after_failed3",
+            "status": STATUS_OFFERED,
+            "id": 2460,
+            "fuzzy_start_date": "Fall 2017",
+            "fuzzy_enrollment_start_date": "Fall 2017",
+          },
+        ],
+        "position_in_program": 6,
+        "title": "Course not passed, another run which user cannot enroll in",
+        "id": 4569,
+      },
     ],
     "id": 3
   },
