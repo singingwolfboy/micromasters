@@ -127,7 +127,7 @@ export default class LearnerSearch extends SearchkitComponent {
               >
                 <RefinementListFilter
                   id="birth_location"
-                  title="Place of Birth"
+                  title="Country of Birth"
                   field="profile.birth_country"
                   operator="OR"
                   itemComponent={CountryRefinementOption}
@@ -139,7 +139,7 @@ export default class LearnerSearch extends SearchkitComponent {
               >
                 <HierarchicalMenuFilter
                   fields={["profile.country", "profile.state_or_territory"]}
-                  title="Current Location"
+                  title="Current Residence"
                   id="country"
                   translations={this.searchkitTranslations}
                 />
@@ -168,7 +168,7 @@ export default class LearnerSearch extends SearchkitComponent {
                     className="mm-button minor-action"
                     onClick={() => openEmailComposer(this.searchkit)}
                   >
-                    Email Selected
+                    Email These Learners
                   </button>
                   <HitsStats component={HitsCount} />
                 </Cell>
@@ -182,7 +182,7 @@ export default class LearnerSearch extends SearchkitComponent {
                   <ResetFilters />
                 </Cell>
               </Grid>
-              <Hits 
+              <Hits
                 className="learner-results"
                 hitsPerPage={50}
                 itemComponent={LearnerResult}
