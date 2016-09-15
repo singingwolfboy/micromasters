@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.db import models, transaction
 from django.db.models import Max
 from jsonfield import JSONField
-from rest_framework.fields import ImageField
 
 DOCTORATE = 'p'
 MASTERS = 'm'
@@ -141,7 +140,6 @@ class Profile(models.Model):
     date_joined_micromasters = models.DateTimeField(blank=True, null=True, auto_now_add=True)
     linkedin = JSONField(blank=True, null=True)
     student_id = models.IntegerField(blank=True, null=True, unique=True)
-    profile_image = ImageField(blank=True, null=True)
 
     @transaction.atomic
     def save(self, *args, **kwargs):

@@ -194,7 +194,7 @@ class ProfileSerializer(ProfileBaseSerializer):
     def update(self, instance, validated_data):
         with transaction.atomic():
             for attr, value in validated_data.items():
-                if attr == 'work_history' or attr == 'education' or attr == 'image':
+                if attr == 'work_history' or attr == 'education':
                     continue
                 else:
                     setattr(instance, attr, value)
@@ -234,7 +234,8 @@ class ProfileSerializer(ProfileBaseSerializer):
             'pretty_printed_student_id',
             'work_history',
             'edx_level_of_education',
-            'education'
+            'education',
+            'image'
         )
         read_only_fields = ('edx_level_of_education', 'agreed_to_terms_of_service',)
 
