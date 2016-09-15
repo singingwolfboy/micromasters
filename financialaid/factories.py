@@ -3,13 +3,15 @@ Factories for financialaid tests
 """
 import datetime
 from factory import SubFactory
-
 from factory.django import DjangoModelFactory
 from factory.fuzzy import (
     FuzzyAttribute,
+    FuzzyChoice,
+    FuzzyDateTime,
+    FuzzyFloat,
     FuzzyInteger,
-    FuzzyText,
-    FuzzyChoice, FuzzyFloat, FuzzyDateTime)
+    FuzzyText
+)
 import faker
 from pytz import UTC
 
@@ -28,7 +30,7 @@ class TierFactory(DjangoModelFactory):
     name = FuzzyText()
     description = FuzzyText()
 
-    class Meta:  # pylint: disable=missing-docstring, no-init, too-few-public-methods, old-style-class
+    class Meta:  # pylint: disable=missing-docstring
         model = Tier
 
 
@@ -42,7 +44,7 @@ class TierProgramFactory(DjangoModelFactory):
     current = FuzzyAttribute(FAKE.boolean)
     income_threshold = FuzzyInteger(low=0, high=10000)
 
-    class Meta:  # pylint: disable=missing-docstring, no-init, too-few-public-methods, old-style-class
+    class Meta:  # pylint: disable=missing-docstring
         model = TierProgram
 
 
@@ -59,5 +61,5 @@ class FinancialAidFactory(DjangoModelFactory):
     country_of_income = FuzzyText(length=2)
     date_exchange_rate = FuzzyDateTime(datetime.datetime(2000, 1, 1, tzinfo=UTC))
 
-    class Meta:  # pylint: disable=missing-docstring, no-init, too-few-public-methods, old-style-class
+    class Meta:  # pylint: disable=missing-docstring
         model = FinancialAid

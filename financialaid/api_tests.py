@@ -1,42 +1,44 @@
 """
-Tests for financialaid view
+Tests for financialaid api
 """
 from django.db.models.signals import post_save
-
 from factory.django import mute_signals
 
 from courses.factories import ProgramFactory
 from dashboard.models import ProgramEnrollment
-from financialaid.backend import determine_tier_program, determine_auto_approval
+from financialaid.api import determine_tier_program, determine_auto_approval
 from financialaid.factories import TierProgramFactory, FinancialAidFactory
 from profiles.factories import ProfileFactory
 from search.base import ESTestCase
 
 
-class FinancialAidBackendTests(ESTestCase):
+class FinancialAidBaseTestCase(ESTestCase):
     """
-    Tests for financialaid views
+    Base test case for financialaid test setup
     """
-    def setUp(self):
-        """
-        Sets up user, logs user in, and enrolls user in program
-        """
+    @classmethod
+    def setUpTestData(cls):
         with mute_signals(post_save):
-            self.profile = ProfileFactory.create()
-        self.program = ProgramFactory.create(
+            cls.profile = ProfileFactory.create()
+        cls.program = ProgramFactory.create(
             financial_aid_availability=True
         )
-        self.tiers = {
-            "0k": TierProgramFactory.create(program=self.program, income_threshold=0, current=True),
-            "15k": TierProgramFactory.create(program=self.program, income_threshold=15000, current=True),
-            "50k": TierProgramFactory.create(program=self.program, income_threshold=50000, current=True),
-            "100k": TierProgramFactory.create(program=self.program, income_threshold=100000, current=True)
+        cls.tiers = {
+            "0k": TierProgramFactory.create(program=cls.program, income_threshold=0, current=True),
+            "15k": TierProgramFactory.create(program=cls.program, income_threshold=15000, current=True),
+            "50k": TierProgramFactory.create(program=cls.program, income_threshold=50000, current=True),
+            "100k": TierProgramFactory.create(program=cls.program, income_threshold=100000, current=True)
         }
-        self.program_enrollment = ProgramEnrollment.objects.create(
-            user=self.profile.user,
-            program=self.program
+        cls.program_enrollment = ProgramEnrollment.objects.create(
+            user=cls.profile.user,
+            program=cls.program
         )
 
+
+class FinancialAidAPITests(FinancialAidBaseTestCase):
+    """
+    Tests for financialaid api backend
+    """
     def test_determine_tier_program(self):
         """
         Tests determine_tier_program()
@@ -59,7 +61,7 @@ class FinancialAidBackendTests(ESTestCase):
             income_usd=150000,
             country_of_income="US"
         )
-        assert determine_auto_approval(financial_aid)
+        assert determine_auto_approval(financial_aid) is True
         financial_aid = FinancialAidFactory.create(
             income_usd=1000,
             country_of_income="US"
@@ -71,7 +73,7 @@ class FinancialAidBackendTests(ESTestCase):
             income_usd=20000,
             country_of_income="IN"
         )
-        assert determine_auto_approval(financial_aid)
+        assert determine_auto_approval(financial_aid) is True
         financial_aid = FinancialAidFactory.create(
             income_usd=1000,
             country_of_income="IN"
@@ -83,9 +85,9 @@ class FinancialAidBackendTests(ESTestCase):
             income_usd=3000,
             country_of_income="KP"
         )
-        assert determine_auto_approval(financial_aid)
+        assert determine_auto_approval(financial_aid) is True
         financial_aid = FinancialAidFactory.create(
             income_usd=0,
             country_of_income="KP"
         )
-        assert determine_auto_approval(financial_aid)
+        assert determine_auto_approval(financial_aid) is True

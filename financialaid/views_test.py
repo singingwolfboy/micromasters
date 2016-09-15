@@ -8,19 +8,23 @@ from factory.django import mute_signals
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.test import APIClient
 
-from financialaid.backend_tests import FinancialAidBackendTests
-from financialaid.models import FinancialAid
+from financialaid.api_tests import FinancialAidBaseTestCase
+from financialaid.models import FinancialAid, FinancialAidStatus
 from profiles.factories import ProfileFactory
 
 
-class FinancialAidViewTests(FinancialAidBackendTests, APIClient):
+class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
     """
     Tests for financialaid views
     """
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        with mute_signals(post_save):
+            cls.profile2 = ProfileFactory.create()
+
     def setUp(self):
         super().setUp()
-        with mute_signals(post_save):
-            self.profile2 = ProfileFactory.create()
         self.client.force_login(self.profile.user)
         self.data = {
             "original_currency": "USD",
@@ -32,12 +36,22 @@ class FinancialAidViewTests(FinancialAidBackendTests, APIClient):
         """
         Tests IncomeValidationView post endpoint
         """
+        # Test that a FinancialAid object is created and is not auto-approved
         assert FinancialAid.objects.count() == 0
         resp = self.client.post(reverse("financialaid_api"), self.data, format='json')
         assert resp.status_code == HTTP_201_CREATED
         assert FinancialAid.objects.count() == 1
         financial_aid = FinancialAid.objects.first()
         assert financial_aid.tier_program == self.tiers["50k"]
+        assert financial_aid.status == FinancialAidStatus.PENDING_DOCS
+        # Test that a FinancialAid object is created and is auto-approved
+        self.data["original_income"] = 200000
+        resp = self.client.post(reverse("financialaid_api"), self.data, format='json')
+        assert resp.status_code == HTTP_201_CREATED
+        assert FinancialAid.objects.count() == 2
+        financial_aid = FinancialAid.objects.last()
+        assert financial_aid.tier_program == self.tiers["100k"]
+        assert financial_aid.status == FinancialAidStatus.AUTO_APPROVED
 
     def test_income_validation_missing_args(self):
         """
