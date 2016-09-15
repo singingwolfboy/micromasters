@@ -2,6 +2,7 @@
     {
         "description": "Learn stuff about digital learning.",
         "title": "Digital Learning",
+        "financial_aid_availability": true,
         "courses": [
             {
                 "position_in_program": 1,

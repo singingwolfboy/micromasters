@@ -51,6 +51,19 @@
   cursor: pointer;
 }
 
+.dashboard-button {
+  background-color: $mm-brand-bg;
+  color: white;
+  text-align: center;
+  font-size: small;
+  min-height: 40px;
+  font-weight: 400;
+
+  &[disabled] {
+    background-color: adjust-color($dashboard-button-teal, $alpha: -0.5);
+  }
+}
+
 .disabled {
   opacity: 0.3;
 }

@@ -33,10 +33,10 @@ class CourseStatus:
     """
     PASSED = 'passed'
     NOT_PASSED = 'not-passed'
-    CURRENT_GRADE = 'verified-not-completed'
-    UPGRADE = 'enrolled-not-verified'
+    CURRENT_GRADE = 'verified'
+    UPGRADE = 'enrolled'
     NOT_OFFERED = 'not-offered'
-    OFFERED = 'offered-not-enrolled'
+    OFFERED = 'offered'
 
     @classmethod
     def all_statuses(cls):
@@ -133,6 +133,7 @@ def get_info_for_program(program, user, enrollments, certificates):
         "id": program.pk,
         "description": program.description,
         "title": program.title,
+        "financial_aid_availability": program.financial_aid_availability,
         "courses": []
     }
     for course in program.course_set.all():

@@ -1,6 +1,7 @@
 export type Program = {
   courses: Array<Course>;
   id: number;
+  financial_aid_availability: boolean;
 };
 export type Course = {
   runs: Array<CourseRun>;

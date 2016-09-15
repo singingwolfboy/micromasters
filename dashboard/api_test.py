@@ -821,7 +821,8 @@ class InfoProgramTest(ESTestCase):
             "id": self.program.pk,
             "description": self.program.description,
             "title": self.program.title,
-            "courses": [{'position_in_program': 1}, {'position_in_program': 1}]
+            "courses": [{'position_in_program': 1}, {'position_in_program': 1}],
+            "financial_aid_availability": self.program.financial_aid_availability,
         }
         self.assertEqual(res, expected_data)
 
@@ -835,7 +836,8 @@ class InfoProgramTest(ESTestCase):
             "id": self.program_no_courses.pk,
             "description": self.program_no_courses.description,
             "title": self.program_no_courses.title,
-            "courses": []
+            "courses": [],
+            "financial_aid_availability": self.program.financial_aid_availability,
         }
         self.assertEqual(res, expected_data)
 
