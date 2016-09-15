@@ -9,8 +9,8 @@ from rest_framework.fields import IntegerField, FloatField, CharField
 
 from courses.models import Program
 from dashboard.models import ProgramEnrollment
-from financialaid.backend import determine_tier_program, determine_auto_approval
-from financialaid.models import FinancialAid
+from financialaid.api import determine_tier_program, determine_auto_approval
+from financialaid.models import FinancialAid, FinancialAidStatus
 
 
 class FinancialAidSerializer(serializers.Serializer):
@@ -50,5 +50,13 @@ class FinancialAidSerializer(serializers.Serializer):
             country_of_income=user.profile.country,
             date_exchange_rate=datetime.datetime.now()
         )
-        determine_auto_approval(financial_aid)
+
+        if determine_auto_approval(financial_aid) is True:
+            financial_aid.status = FinancialAidStatus.AUTO_APPROVED
+        else:
+            financial_aid.status = FinancialAidStatus.PENDING_DOCS
+        financial_aid.save()
+
+        # Add auditing here
+
         return financial_aid
