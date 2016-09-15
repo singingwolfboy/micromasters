@@ -27,7 +27,7 @@ class TierProgram(models.Model):
     """
     The tiers for discounted pricing assigned to a program
     """
-    program = models.ForeignKey(Program, null=False, related_name="tiers")
+    program = models.ForeignKey(Program, null=False, related_name="tier_programs")
     tier = models.ForeignKey(Tier, null=False)
     discount_amount = models.IntegerField(null=False)
     current = models.BooleanField(null=False, default=False)
@@ -47,14 +47,14 @@ class TierProgram(models.Model):
         return super(TierProgram, self).save(*args, **kwargs)
 
 
-class FinalcialAidStatus:
+class FinancialAidStatus:
     """Statuses for the Financial Aid model"""
     CREATED = 'created'
-    APPROVED = 'approved'
     AUTO_APPROVED = 'auto-approved'
-    REJECTED = 'rejected'
     PENDING_DOCS = 'pending_docs'
     PENDING_MANUAL_APPROVAL = 'pending_manual_approval'
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
 
     ALL_STATUSES = [CREATED, APPROVED, AUTO_APPROVED, REJECTED, PENDING_DOCS, PENDING_MANUAL_APPROVAL]
 
@@ -64,11 +64,11 @@ class FinancialAid(models.Model):
     An application for financial aid/personal pricing
     """
     user = models.ForeignKey(User, null=False)
-    tier = models.ForeignKey(TierProgram, null=False)
+    tier_program = models.ForeignKey(TierProgram, null=False)
     status = models.CharField(
         null=False,
-        choices=[(status, status) for status in FinalcialAidStatus.ALL_STATUSES],
-        default=FinalcialAidStatus.CREATED,
+        choices=[(status, status) for status in FinancialAidStatus.ALL_STATUSES],
+        default=FinancialAidStatus.CREATED,
         max_length=30,
     )
     income_usd = models.FloatField(null=True)
