@@ -9,4 +9,5 @@ from financialaid.views import ReviewFinancialAidView
 
 urlpatterns = [
     url(r'^review/?$', ReviewFinancialAidView.as_view(), name='review_financial_aid'),
+    url(r'^review/(?P<status>[\w-]+)/?$', ReviewFinancialAidView.as_view(), name='review_financial_aid'),
 ]

@@ -51,12 +51,20 @@ class FinancialAidStatus:
     """Statuses for the Financial Aid model"""
     CREATED = 'created'
     AUTO_APPROVED = 'auto-approved'
-    PENDING_DOCS = 'pending_docs'
-    PENDING_MANUAL_APPROVAL = 'pending_manual_approval'
+    PENDING_DOCS = 'pending-docs'
+    PENDING_MANUAL_APPROVAL = 'pending-manual-approval'
     APPROVED = 'approved'
     REJECTED = 'rejected'
 
     ALL_STATUSES = [CREATED, APPROVED, AUTO_APPROVED, REJECTED, PENDING_DOCS, PENDING_MANUAL_APPROVAL]
+    STATUS_MESSAGES_DICT = {
+        CREATED: "Created Applications",
+        AUTO_APPROVED: "Auto-approved Applications",
+        PENDING_DOCS: "Incomplete Applications",
+        PENDING_MANUAL_APPROVAL: "Pending Applications",
+        APPROVED: "Approved Applications",
+        REJECTED: "Rejected Applications",
+    }
 
 
 class FinancialAid(models.Model):

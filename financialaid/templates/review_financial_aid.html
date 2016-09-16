@@ -9,7 +9,17 @@
     <div class="single-column" style="max-width: 1000px;">
       <p><h4>Financial Aid Submissions</h4></p>
       <div class="mdl-card">
-        <div class="pagination pull-right">
+        <div class="filter">
+          <select class="form-control" onchange="location = this.options[this.selectedIndex].value;">
+          {% for status, message in financial_aid_statuses %}
+            <option value="{% url 'review_financial_aid' status=status %}"
+                    {% if selected_status == status %}selected{% endif %}>
+              {{ message }}
+            </option>
+          {% endfor %}
+          </select>​
+        </div>
+        <div class="pagination">
           <span class="step-links">
           {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-default"><</a>
@@ -25,6 +35,7 @@
           <br>
           <span class="current">Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
         </div>
+        
         <table class="table">
           <thead>
             <tr>
