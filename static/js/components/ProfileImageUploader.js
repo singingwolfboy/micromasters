@@ -30,15 +30,11 @@ const cropHelper = updatePhotoEdit => () => {
   updatePhotoEdit(updatedPhoto);
 };
 
-class CropperWrapper extends React.Component {
-  _crop = () => {
-    console.log(
-    window.url = this.refs.cropper.getCroppedCanvas().toDataURL();
-  };
+const toDataURL = photo => (
+  photo.is
 
-  render () {
-    const { photo } = this.props;
-const cropper = crop => (
+
+const cropper = (crop, photo) => (
   <Cropper
     ref='cropper'
     className="photo-active-item cropper"
