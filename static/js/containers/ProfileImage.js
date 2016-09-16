@@ -6,7 +6,7 @@ import Icon from 'react-mdl/lib/Icon';
 
 import { makeProfileImageUrl, getPreferredName } from '../util/util';
 import type { Profile } from '../flow/profileTypes';
-import ProfilePhotoUploader from '../components/ProfilePhotoUploader';
+import ProfileImageUploader from '../components/ProfilePhotoUploader';
 import { createActionHelper } from '../util/redux';
 import { setPhotoDialogVisibility } from '../actions/ui';
 
@@ -37,7 +37,7 @@ class ProfileImage extends React.Component {
 
     return (
       <div className="avatar">
-        <ProfilePhotoUploader {...this.props} />
+        <ProfileImageUploader {...this.props} />
         <img
           src={imageUrl}
           alt={`Profile image for ${getPreferredName(profile, false)}`}
