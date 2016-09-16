@@ -1,5 +1,5 @@
 """
-Views from financialaid
+Views for financialaid
 """
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import CreateAPIView
