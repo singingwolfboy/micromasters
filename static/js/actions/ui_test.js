@@ -20,6 +20,7 @@ import {
   SET_ENROLL_DIALOG_VISIBILITY,
   SET_ENROLL_MESSAGE,
   SET_ENROLL_SELECTED_PROGRAM,
+  SET_PHOTO_DIALOG_VISIBILITY,
 
   clearUI,
   updateDialogText,
@@ -42,6 +43,7 @@ import {
   setEnrollDialogVisibility,
   setEnrollMessage,
   setEnrollSelectedProgram,
+  setPhotoDialogVisibility,
 } from '../actions/ui';
 import { assertCreatedActionHelper } from './util';
 
@@ -69,6 +71,7 @@ describe('generated UI action helpers', () => {
       [setEnrollDialogVisibility, SET_ENROLL_DIALOG_VISIBILITY],
       [setEnrollMessage, SET_ENROLL_MESSAGE],
       [setEnrollSelectedProgram, SET_ENROLL_SELECTED_PROGRAM],
+      [setPhotoDialogVisibility, SET_PHOTO_DIALOG_VISIBILITY],
     ].forEach(assertCreatedActionHelper);
   });
 });

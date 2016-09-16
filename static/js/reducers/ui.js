@@ -32,6 +32,8 @@ import {
   SET_ENROLL_DIALOG_VISIBILITY,
   SET_ENROLL_MESSAGE,
   SET_ENROLL_SELECTED_PROGRAM,
+
+  SET_PHOTO_DIALOG_VISIBILITY,
 } from '../actions/ui';
 import { PERSONAL_STEP } from '../constants';
 import type { Action } from '../flow/reduxTypes';
@@ -64,6 +66,7 @@ export type UIState = {
   enrollDialogVisibility:       boolean;
   enrollMessage:                ?string;
   enrollSelectedProgram:        ?number;
+  photoDialogVisibility:        boolean;
 };
 
 export const INITIAL_UI_STATE: UIState = {
@@ -89,6 +92,7 @@ export const INITIAL_UI_STATE: UIState = {
   enrollDialogVisibility: false,
   enrollMessage: null,
   enrollSelectedProgram: null,
+  photoDialogVisibility: false,
 };
 
 export const ui = (state: UIState = INITIAL_UI_STATE, action: Action) => {
@@ -211,6 +215,8 @@ export const ui = (state: UIState = INITIAL_UI_STATE, action: Action) => {
       enrollDialogVisibility: action.payload
     });
   }
+  case SET_PHOTO_DIALOG_VISIBILITY:
+    return { ...state, photoDialogVisibility: action.payload };
   default:
     return state;
   }
