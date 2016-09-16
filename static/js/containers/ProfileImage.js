@@ -9,6 +9,11 @@ import type { Profile } from '../flow/profileTypes';
 import ProfileImageUploader from '../components/ProfileImageUploader';
 import { createActionHelper } from '../util/redux';
 import { setPhotoDialogVisibility } from '../actions/ui';
+import {
+  startPhotoEdit,
+  clearPhotoEdit,
+  updatePhotoEdit
+} from '../actions/image_upload';
 
 class ProfileImage extends React.Component {
   props: {
@@ -51,10 +56,14 @@ class ProfileImage extends React.Component {
 
 const mapStateToProps = state => ({
   photoDialogOpen: state.ui.photoDialogVisibility,
+  imageUpload: state.imageUpload,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setDialogVisibility: createActionHelper(dispatch, setPhotoDialogVisibility)
+  setDialogVisibility: createActionHelper(dispatch, setPhotoDialogVisibility),
+  startPhotoEdit: createActionHelper(dispatch, startPhotoEdit),
+  clearPhotoEdit: createActionHelper(dispatch, clearPhotoEdit),
+  updatePhotoEdit: createActionHelper(dispatch, updatePhotoEdit),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileImage);
