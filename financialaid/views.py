@@ -16,3 +16,9 @@ class IncomeValidationView(CreateAPIView):
     serializer_class = FinancialAidSerializer
     authentication_classes = (SessionAuthentication, )
     permission_classes = (IsAuthenticated, )
+
+    def get_queryset(self):
+        """
+        Used for returning the view, which hasn't been defined yet.
+        """
+        return None
