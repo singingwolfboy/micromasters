@@ -4,11 +4,14 @@ Views from financialaid
 import json
 
 from django.conf import settings
+from django.db.models import F
 from django.views.generic import ListView
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
+from courses.models import CourseRun
+from ecommerce.models import CoursePrice
 from financialaid.models import FinancialAid, FinancialAidStatus
 from financialaid.serializers import FinancialAidSerializer
 from ui.views import get_bundle_url
@@ -73,7 +76,25 @@ class ReviewFinancialAidView(ListView):
         """
         Gets queryset for ListView to return to view
         """
+        # Get requested status
         self.selected_status = self.kwargs.get("status", None)
         if self.selected_status is None or self.selected_status not in FinancialAidStatus.ALL_STATUSES:
             self.selected_status = FinancialAidStatus.PENDING_MANUAL_APPROVAL
-        return FinancialAid.objects.filter(status=self.selected_status)
+        financial_aids = FinancialAid.objects.filter(status=self.selected_status)
+
+        # Annotate with adjusted price
+        # Note: This implementation of retrieving a course price is a naive lookup that assumes
+        # all course runs and courses will be the same price for the foreseeable future,
+        # irrespective of the program. Therefore we can just take the price from any currently
+        # enroll-able course run.
+        course_price = CoursePrice.objects.filter(
+            is_valid=True,
+            course_run__in=CourseRun.objects.filter(CourseRun.get_active_enrollment_queryset())
+        ).first()
+        financial_aids = financial_aids.annotate(
+            # This will raise a 500 if there is no course_price available, though this
+            # should not happen unless the courses/etc aren't set up correctly
+            adjusted_price=course_price.price - F("tier_program__discount_amount")
+        )
+
+        return financial_aids
