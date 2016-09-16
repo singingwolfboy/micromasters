@@ -184,6 +184,18 @@
         font-size: 14px;
         font-weight: normal;
         color: rgba(0,0,0,0.8);
+
+        &.sk-toggle-height {
+          text-align: center;
+          vertical-align: middle;
+          max-height: 30px !important;
+        }
+
+        .sk-pagination-option * {
+          font-size: 20px;
+          font-weight: 400;
+          padding: 0 0 !important;
+        }
       }
     }
 

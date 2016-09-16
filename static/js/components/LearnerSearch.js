@@ -20,6 +20,7 @@ import iso3166 from 'iso-3166-2';
 import ProgramFilter from './ProgramFilter';
 import LearnerResult from './search/LearnerResult';
 import CountryRefinementOption from './search/CountryRefinementOption';
+import CustomPaginationDisplay from './search/CustomPaginationDisplay';
 import FilterVisibilityToggle from './search/FilterVisibilityToggle';
 import HitsCount from './search/HitsCount';
 import EmailCompositionDialog from './EmailCompositionDialog';
@@ -175,7 +176,7 @@ export default class LearnerSearch extends SearchkitComponent {
                 <Cell col={2} />
                 <Cell col={4} className="pagination-sort">
                   <SortingSelector options={sortOptions} />
-                  <Pagination />
+                  <Pagination showText={false} listComponent={CustomPaginationDisplay} />
                 </Cell>
                 <Cell col={12}>
                   <SelectedFilters />
