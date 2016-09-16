@@ -6,6 +6,18 @@ import Dropzone from 'react-dropzone';
 
 const onDrop = files => console.log(files);
 
+const dropZone = () => (
+  <Dropzone
+    onDrop = {onDrop}
+    className = "photo-active-item photo-dropzone"
+    activeClassName = "photo-active-item photo-dropzone active"
+  >
+    <div>
+      Drag a photo here or click to select a photo.
+    </div>
+  </Dropzone>
+);
+
 const ProfileImageUploader = ({
   photoDialogOpen,
   setDialogVisibility
@@ -17,7 +29,7 @@ const ProfileImageUploader = ({
     autoScrollBodyContent={true}
     title="Upload a Profile Photo"
   >
-    <Dropzone onDrop={onDrop} />
+    { dropZone() }
   </Dialog>
 );
 

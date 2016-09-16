@@ -6,7 +6,7 @@ import Icon from 'react-mdl/lib/Icon';
 
 import { makeProfileImageUrl, getPreferredName } from '../util/util';
 import type { Profile } from '../flow/profileTypes';
-import ProfileImageUploader from '../components/ProfilePhotoUploader';
+import ProfileImageUploader from '../components/ProfileImageUploader';
 import { createActionHelper } from '../util/redux';
 import { setPhotoDialogVisibility } from '../actions/ui';
 
