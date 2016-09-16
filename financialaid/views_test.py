@@ -8,7 +8,7 @@ from factory.django import mute_signals
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.test import APIClient
 
-from financialaid.api_tests import FinancialAidBaseTestCase
+from financialaid.api_test import FinancialAidBaseTestCase
 from financialaid.models import FinancialAid, FinancialAidStatus
 from profiles.factories import ProfileFactory
 
@@ -22,6 +22,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         super().setUpTestData()
         with mute_signals(post_save):
             cls.profile2 = ProfileFactory.create()
+        cls.url = reverse("financialaid_api")
 
     def setUp(self):
         super().setUp()
@@ -38,7 +39,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         """
         # Test that a FinancialAid object is created and is not auto-approved
         assert FinancialAid.objects.count() == 0
-        resp = self.client.post(reverse("financialaid_api"), self.data, format='json')
+        resp = self.client.post(self.url, self.data, format='json')
         assert resp.status_code == HTTP_201_CREATED
         assert FinancialAid.objects.count() == 1
         financial_aid = FinancialAid.objects.first()
@@ -46,7 +47,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         assert financial_aid.status == FinancialAidStatus.PENDING_DOCS
         # Test that a FinancialAid object is created and is auto-approved
         self.data["original_income"] = 200000
-        resp = self.client.post(reverse("financialaid_api"), self.data, format='json')
+        resp = self.client.post(self.url, self.data, format='json')
         assert resp.status_code == HTTP_201_CREATED
         assert FinancialAid.objects.count() == 2
         financial_aid = FinancialAid.objects.last()
@@ -59,7 +60,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         """
         for key_to_not_send in ["original_currency", "program_id", "original_income"]:
             data = {key: value for key, value in self.data.items() if key != key_to_not_send}
-            resp = self.client.post(reverse("financialaid_api"), data)
+            resp = self.client.post(self.url, data)
             assert resp.status_code == HTTP_400_BAD_REQUEST
 
     def test_income_validation_no_financial_aid_availability(self):
@@ -68,7 +69,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         """
         self.program.financial_aid_availability = False
         self.program.save()
-        resp = self.client.post(reverse("financialaid_api"), self.data)
+        resp = self.client.post(self.url, self.data)
         assert resp.status_code == HTTP_400_BAD_REQUEST
 
     def test_income_validation_user_not_enrolled(self):
@@ -77,7 +78,7 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         """
         self.program_enrollment.user = self.profile2.user
         self.program_enrollment.save()
-        resp = self.client.post(reverse("financialaid_api"), self.data)
+        resp = self.client.post(self.url, self.data)
         assert resp.status_code == HTTP_400_BAD_REQUEST
 
     def test_income_validation_currency_not_usd(self):
@@ -85,5 +86,5 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         Tests IncomeValidationView post  Only takes USD
         """
         self.data["original_currency"] = "NOTUSD"
-        resp = self.client.post(reverse("financialaid_api"), self.data)
+        resp = self.client.post(self.url, self.data)
         assert resp.status_code == HTTP_400_BAD_REQUEST
