@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardTitle, CardText } from 'react-mdl/lib/Card';
 import Link from 'react-router/lib/Link';
 
-import ProfileImage from '../ProfileImage';
+import ProfileImage from '../../containers/ProfileImage';
 import { getPreferredName } from '../../util/util';
 import type { Profile } from '../../flow/profileTypes';
 import type { Program } from '../../flow/programTypes';

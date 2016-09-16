@@ -2,7 +2,7 @@
 /* global SETTINGS: false */
 import React from 'react';
 
-import ProfileImage from './ProfileImage';
+import ProfileImage from '../containers/ProfileImage';
 import { getPreferredName } from '../util/util';
 import type { Profile } from '../flow/profileTypes';
 

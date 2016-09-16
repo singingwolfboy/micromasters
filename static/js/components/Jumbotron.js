@@ -3,7 +3,7 @@
 import React from 'react';
 import Grid, { Cell } from 'react-mdl/lib/Grid';
 
-import ProfileImage from './ProfileImage';
+import ProfileImage from '../containers/ProfileImage';
 import type { Profile } from '../flow/profileTypes';
 
 class Jumbotron extends React.Component {
