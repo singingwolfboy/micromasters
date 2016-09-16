@@ -8,10 +8,10 @@ def determine_tier_program(program, income):
     """
     Determines and returns the TierProgram for a given income.
     Args:
-        program: Program
-        income: numeric
+        program (Program): the Program to determine a TierProgram for
+        income (numeric): the income of the User
     Returns:
-        TierProgram
+        TierProgram: the TierProgram for the Program given the User's income
     """
     # To determine the tier for a user, find the set of every tier whose income threshold is
     # less than or equal to the income of the user. The highest tier out of that set will
@@ -25,9 +25,9 @@ def determine_auto_approval(financial_aid):
     """
     Takes income and country code and returns a boolean if auto-approved.
     Args:
-        financial_aid: FinancialAid
+        financial_aid (FinancialAid): the financial aid object to determine auto-approval
     Returns:
-        boolean
+        boolean: True if auto-approved, False if not
     """
     income_threshold = COUNTRY_INCOME_THRESHOLDS.get(financial_aid.country_of_income, DEFAULT_INCOME_THRESHOLD)
     return financial_aid.income_usd > income_threshold

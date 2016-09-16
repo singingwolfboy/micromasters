@@ -16,7 +16,12 @@ import faker
 from pytz import UTC
 
 from courses.factories import ProgramFactory
-from financialaid.models import TierProgram, Tier, FinancialAidStatus, FinancialAid
+from financialaid.models import (
+    FinancialAid,
+    FinancialAidStatus,
+    Tier,
+    TierProgram
+)
 from profiles.factories import UserFactory
 
 

@@ -5,12 +5,11 @@ import json
 
 from django.conf import settings
 from django.views.generic import ListView
-from django.views.generic.detail import SingleObjectMixin
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from financialaid.models import FinancialAidStatus, FinancialAid
+from financialaid.models import FinancialAid
 from financialaid.serializers import FinancialAidSerializer
 from ui.views import get_bundle_url
 
@@ -43,22 +42,3 @@ class ReviewFinancialAidView(ListView):
         }
         context["js_settings_json"] = json.dumps(js_settings)
         return context
-
-# class ReviewFinancialAidView(ReactView):
-#     """
-#     View for users pages. This gets handled by the dashboard view like all other
-#     React handled views, but we also want to return a 404 if the user does not exist.
-#     """
-#     def get(self, request, *args, **kwargs):
-#         """
-#         Handle GET requests
-#         """
-#         user = kwargs.pop('user')
-#         if user is not None:
-#             if not CanSeeIfNotPrivate().has_permission(request, self):
-#                 raise Http404
-#         elif request.user.is_anonymous():
-#             # /users/ redirects to logged in user's page, but user is not logged in here
-#             raise Http404
-# 
-#         return super(UsersView, self).get(request, *args, **kwargs)
