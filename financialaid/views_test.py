@@ -33,11 +33,10 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
             "original_income": 80000
         }
 
-    def test_income_validation(self):
+    def test_income_validation_not_auto_approved(self):
         """
-        Tests IncomeValidationView post endpoint
+        Tests IncomeValidationView post endpoint for not-auto-approval
         """
-        # Test that a FinancialAid object is created and is not auto-approved
         assert FinancialAid.objects.count() == 0
         resp = self.client.post(self.url, self.data, format='json')
         assert resp.status_code == HTTP_201_CREATED
@@ -45,12 +44,17 @@ class FinancialAidViewTests(FinancialAidBaseTestCase, APIClient):
         financial_aid = FinancialAid.objects.first()
         assert financial_aid.tier_program == self.tiers["50k"]
         assert financial_aid.status == FinancialAidStatus.PENDING_DOCS
-        # Test that a FinancialAid object is created and is auto-approved
+
+    def test_income_validation_auto_approved(self):
+        """
+        Tests IncomeValidationView post endpoint for auto-approval
+        """
+        assert FinancialAid.objects.count() == 0
         self.data["original_income"] = 200000
         resp = self.client.post(self.url, self.data, format='json')
         assert resp.status_code == HTTP_201_CREATED
-        assert FinancialAid.objects.count() == 2
-        financial_aid = FinancialAid.objects.last()
+        assert FinancialAid.objects.count() == 1
+        financial_aid = FinancialAid.objects.first()
         assert financial_aid.tier_program == self.tiers["100k"]
         assert financial_aid.status == FinancialAidStatus.AUTO_APPROVED
 

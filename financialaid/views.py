@@ -1,5 +1,5 @@
 """
-Views from financialaid
+Views for financialaid
 """
 import json
 
