@@ -9,7 +9,20 @@
     <div class="single-column" style="max-width: 1000px;">
       <p><h4>Financial Aid Submissions</h4></p>
       <div class="mdl-card">
-        <div class="filter">
+        <div>
+          <strong>Sort by: </strong>
+          <div class="btn-group">
+          {% for field in sort_field_info %}
+            <a href="{% url 'review_financial_aid' status=selected_status sort_field=field.sort_field %}"
+               class="btn btn-default btn-sm">
+              {{ field.display }}
+              {% if field.direction_display == "" %}&#9650;{% endif %}
+              {% if field.direction_display == "-" %}&#9660;{% endif %}
+            </a>
+          {% endfor %}
+          </div>
+        </div>
+        <div>
           <select class="form-control" onchange="location = this.options[this.selectedIndex].value;">
           {% for status, message in financial_aid_statuses %}
             <option value="{% url 'review_financial_aid' status=status %}"
@@ -19,7 +32,7 @@
           {% endfor %}
           </select>​
         </div>
-        <div class="pagination">
+        <div>
           <span class="step-links">
           {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-default"><</a>
@@ -42,9 +55,10 @@
               <th></th>
               <th>Name/Location</th>
               <th>Adjusted Cost</th>
+              <th>Reported Income</th>
               <th>Income Verification</th>
-              <th></th>
-              <th></th>
+              <th>Accept</th>
+              <th>Reject</th>
               <th>Email</th>
             </tr>
           </thead>
@@ -67,6 +81,7 @@
                   </option>
                 </select>
               </td>
+              <td>${{ financial_aid.income_usd }}</td>
               <td><a href="#">View Documents (#)</a></td>
               <td>
                 <button class="btn btn-default">

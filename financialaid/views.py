@@ -36,11 +36,42 @@ class IncomeValidationView(CreateAPIView):
 class ReviewFinancialAidView(ListView):
     """
     View for reviewing financial aid requests.
+    Note: In the future, it may be worth factoring out the code for sorting into its own subclass of ListView
     """
     paginate_by = 10
     context_object_name = "financial_aid_objects"
     template_name = "review_financial_aid.html"
-    selected_status = None  # Used to modify queryset and in context
+    # Used to modify queryset and in context
+    selected_status = None
+    # Used for sorting
+    sort_field = None
+    sort_direction = ""
+    sort_field_info = None
+    sort_fields = {
+        "first_name": {
+            "display": "First Name"
+        },
+        "last_name": {
+            "display": "Last Name"
+        },
+        "location": {
+            "display": "Location"
+        },
+        "adjusted_cost": {
+            "display": "Adjusted Cost"
+        },
+        "reported_income": {
+            "display": "Reported Income"
+        },
+    }
+    sort_field_mappings = {
+        "first_name": "user__profile__first_name",
+        "last_name": "user__profile__last_name",
+        "location": "user__profile__city",
+        "adjusted_cost": "adjusted_price",
+        "reported_income": "income_usd",
+    }
+    default_sort_field = "first_name"
 
     def get_context_data(self, **kwargs):
         """
@@ -59,6 +90,29 @@ class ReviewFinancialAidView(ListView):
         context["financial_aid_statuses"] = (
             (status, "Show: {message}".format(message=messages[status]))
             for status in message_order
+        )
+        # Get sort field information
+        sort_link_order = (
+            "first_name",
+            "last_name",
+            "location",
+            "adjusted_cost",
+            "reported_income",
+        )
+        new_sort_direction = "" if self.sort_direction == "-" else "-"
+        context["sort_field_info"] = (
+            {
+                # For appending the sort_by get param on url
+                "sort_field": "{sort_direction}{sort_field}".format(
+                    # If this field is our current sort field, we want to toggle the sort direction, else default ""
+                    sort_direction=new_sort_direction if field == self.sort_field else "",
+                    sort_field=field
+                ),
+                # If this field is the current sort field, we want to indicate the current sort direction
+                "direction_display": self.sort_direction if field == self.sort_field else None,
+                "display": self.sort_fields[field]["display"]
+            }
+            for field in sort_link_order
         )
         # Required for styling
         context["style_src"] = get_bundle_url(self.request, "style.js")
@@ -80,7 +134,7 @@ class ReviewFinancialAidView(ListView):
         self.selected_status = self.kwargs.get("status", None)
         if self.selected_status is None or self.selected_status not in FinancialAidStatus.ALL_STATUSES:
             self.selected_status = FinancialAidStatus.PENDING_MANUAL_APPROVAL
-        financial_aids = FinancialAid.objects.filter(status=self.selected_status)
+        financial_aids = FinancialAid.objects.filter()  # status=self.selected_status)
 
         # Annotate with adjusted price
         # Note: This implementation of retrieving a course price is a naive lookup that assumes
@@ -95,6 +149,19 @@ class ReviewFinancialAidView(ListView):
             # This will raise a 500 if there is no course_price available, though this
             # should not happen unless the courses/etc aren't set up correctly
             adjusted_price=course_price.price - F("tier_program__discount_amount")
+        )
+
+        # Get requested sort parameter
+        self.sort_field = self.kwargs.get("sort_field", self.default_sort_field)
+        if self.sort_field.startswith("-"):
+            self.sort_field = self.sort_field[1:]
+            # Defined above: self.sort_direction = ""
+            self.sort_direction = "-"
+        financial_aids = financial_aids.order_by(
+            "{sort_direction}{sort_field}".format(
+                sort_direction=self.sort_direction,
+                sort_field=self.sort_field_mappings.get(self.sort_field, self.sort_field)
+            )
         )
 
         return financial_aids
