@@ -228,10 +228,6 @@
       bottom: 5px;
     }
 
-    .sk-reset-filters.is-disabled {
-      color: rgba(0,0,0,0);
-    }
-
     .mdl-cell {
       margin-top: 0;
       margin-bottom: 0;
@@ -333,9 +329,6 @@
   flex-flow: row;
   border-radius: 3px;
   border: 1px solid #e4e4e4;
-  font-size: 14px !important;
-  font-weight: normal !important;
-  color: rgba(0,0,0,0.8) !important;
 
   > select {
     background-color: $fg-grey;
@@ -348,6 +341,9 @@
     background-color: $fg-grey;
     margin-right: -13px;
     padding: 5px 0 5px 5px;
+    font-size: 14px;
+    font-weight: normal;
+    color: rgba(0,0,0,0.8);
   }
 
   select, option {
