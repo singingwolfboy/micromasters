@@ -329,9 +329,25 @@
 }
 
 .sk-select {
+  display: flex;
+  flex-flow: row;
+  border-radius: 3px;
+  border: 1px solid #e4e4e4;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  color: rgba(0,0,0,0.8) !important;
+
   > select {
     background-color: $fg-grey;
-    border-color: $border-color;
+    border: 0;
+    padding: 6px 30px 6px 0;
+  }
+
+  .label-before-selected {
+    width: 70px;
+    background-color: $fg-grey;
+    margin-right: -13px;
+    padding: 5px 0 5px 5px;
   }
 
   select, option {
