@@ -46,6 +46,7 @@ class FinancialAidAPITests(FinancialAidBaseTestCase):
         Tests determine_tier_program()
         """
         assert determine_tier_program(self.program, 0) == self.tiers["0k"]
+        assert determine_tier_program(self.program, 0) != self.tiers["15k"]
         assert determine_tier_program(self.program, 1000) == self.tiers["0k"]
         assert determine_tier_program(self.program, 15000) == self.tiers["15k"]
         assert determine_tier_program(self.program, 23500) == self.tiers["15k"]
