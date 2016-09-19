@@ -147,6 +147,12 @@
     }
   }
 
+  .sticky {
+    background: white;
+    z-index: 999;
+    box-shadow: 0 2px 3px -2px rgba(0, 0, 0, .25);
+  }
+
   .search-header {
     min-height: 100px;
     padding-left: 5px;
@@ -329,6 +335,7 @@
   flex-flow: row;
   border-radius: 3px;
   border: 1px solid #e4e4e4;
+  max-height: 30px !important;
 
   > select {
     background-color: $fg-grey;

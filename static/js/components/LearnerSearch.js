@@ -16,6 +16,7 @@ import {
 import Grid, { Cell } from 'react-mdl/lib/Grid';
 import Card from 'react-mdl/lib/Card/Card';
 import iso3166 from 'iso-3166-2';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import ProgramFilter from './ProgramFilter';
 import LearnerResult from './search/LearnerResult';
@@ -109,6 +110,7 @@ export default class LearnerSearch extends SearchkitComponent {
       openEmailComposer,
       currentProgramEnrollment,
     } = this.props;
+
     return (
       <div className="learners-search">
         <ProgramFilter
@@ -165,33 +167,36 @@ export default class LearnerSearch extends SearchkitComponent {
           </Cell>
           <Cell col={9}>
             <Card className="fullwidth" shadow={1}>
-              <Grid className="search-header">
-                <Cell col={6} className="result-info">
-                  <button
-                    id="email-selected"
-                    className="mm-button minor-action"
-                    onClick={() => openEmailComposer(this.searchkit)}
-                  >
-                    Email These Learners
-                  </button>
-                  <HitsStats component={HitsCount} />
-                </Cell>
-                <Cell col={2} />
-                <Cell col={4} className="pagination-sort">
-                  <SortingSelector options={sortOptions} listComponent={CustomSortingSelect} />
-                  <Pagination showText={false} listComponent={CustomPaginationDisplay} />
-                </Cell>
-                <Cell col={12}>
-                  <SelectedFilters />
-                  <ResetFilters component={CustomResetFiltersDisplay}/>
-                </Cell>
-              </Grid>
-              <Hits
-                className="learner-results"
-                hitsPerPage={50}
-                itemComponent={LearnerResult}
-              />
-              <NoHits />
+              <StickyContainer>
+                <Sticky>
+                  <Grid className="search-header">
+                    <Cell col={6} className="result-info">
+                      <button
+                        id="email-selected"
+                        className="mm-button minor-action"
+                        onClick={() => openEmailComposer(this.searchkit)}
+                      >
+                        Email These Learners
+                      </button>
+                      <HitsStats component={HitsCount} />
+                    </Cell>
+                    <Cell col={2} />
+                    <Cell col={4} className="pagination-sort">
+                      <SortingSelector options={sortOptions} listComponent={CustomSortingSelect} />
+                      <Pagination showText={false} listComponent={CustomPaginationDisplay} />
+                    </Cell>
+                    <Cell col={12}>
+                      <SelectedFilters />
+                      <ResetFilters component={CustomResetFiltersDisplay}/>
+                    </Cell>
+                  </Grid>
+                </Sticky>
+                <Hits
+                  className="learner-results"
+                  hitsPerPage={50}
+                  itemComponent={LearnerResult} />
+                <NoHits />
+              </StickyContainer>
             </Card>
           </Cell>
         </Grid>

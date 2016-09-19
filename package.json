@@ -63,6 +63,7 @@
     "react-tap-event-plugin": "1.0.0",
     "react-tooltip": "^3.1.6",
     "react-virtualized": "^7.7.1",
+    "react-sticky": "5.0.5",
     "redux": "3.5.2",
     "redux-actions": "^0.11.0",
     "redux-asserts": "0.0.8",
